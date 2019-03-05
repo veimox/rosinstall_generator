@@ -46,11 +46,13 @@ def get_distro(distro_name):
     return get_cached_distribution(index, distro_name)
 
 
-def get_package_names(distro):
+def get_package_names(distro, source=False):
     released_names = []
     unreleased_names = []
-    for pkg_name, pkg in distro.release_packages.items():
-        repo = distro.repositories[pkg.repository_name].release_repository
+
+    for pkg_name, pkg in distro.release_packages.items() if source is False else distro.source_packages.items():
+        repo = distro.repositories[pkg.repository_name].release_repository if source is False else \
+            distro.repositories[pkg.repository_name].source_repository
         if repo:
             if repo.version is not None:
                 released_names.append(pkg_name)

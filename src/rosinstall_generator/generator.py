@@ -347,7 +347,7 @@ def generate_rosinstall(distro_name, names,
         # add wet dependencies
         if result.wet_package_names:
             wet_distro = get_wet_distro(distro_name)
-            _, unreleased_package_names = get_package_names(wet_distro)
+            _, unreleased_package_names = get_package_names(wet_distro, source=upstream_source_version)
             excludes = exclude_names.wet_package_names | deps_up_to_names.wet_package_names | set(unreleased_package_names)
             result.wet_package_names |= get_recursive_dependencies_of_wet(wet_distro, result.wet_package_names, excludes=excludes,
                     limit_depth=deps_depth, source=upstream_source_version)
